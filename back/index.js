@@ -19,7 +19,7 @@ const catNames = require('cat-names');
 io.on('connection', (socket) => {
 
   const username = catNames.random()
-  console.log('a user connected')
+  console.log(username +' is connected')
   io.emit('user:new',username)
   socket.emit('user:me',username) 
   

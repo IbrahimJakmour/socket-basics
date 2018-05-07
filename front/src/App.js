@@ -6,7 +6,7 @@ import './App.css';
 
 class App extends Component {
 
-  state = { socket:null, globalNumber:0 }
+  state = { socket:null, globalNumber:0 ,username:""}
 
   componentDidMount(){
     const socket = io('http://localhost:8888');
@@ -41,6 +41,7 @@ class App extends Component {
           <button onClick={this.onIncrement}>+</button>
           <button onClick={this.onDecrement}>-</button>
         </p>
+        <h2>{this.state.username} is connected</h2>
       </div>
     );
   }
