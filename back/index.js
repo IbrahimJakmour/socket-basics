@@ -23,8 +23,11 @@ io.on('connection', (socket) => {
   io.emit('user:new',username)
   socket.emit('user:me',username) 
   
+  socket.emit('new car arrived in parking', { color:'red', brand:'toyota'})
+  socket.emit('message')
+  
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    console.log(username +' user disconnected');
   });
 	
   socket.on('increment', () => {

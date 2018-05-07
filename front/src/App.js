@@ -6,13 +6,16 @@ import './App.css';
 
 class App extends Component {
 
-  state = { socket:null, globalNumber:0 ,username:""}
+  state = { socket:null, globalNumber:0 ,username:"",message:"hi"}
 
   componentDidMount(){
     const socket = io('http://localhost:8888');
 
     this.setState({socket:socket})
 
+    socket.on('new car arrived in parking', (car) => { console.log(car.color+" "+car.brand)})
+    socket.on('message', (message) => { console.log(message)})
+    
     socket.on('number:change', (globalNumber) => {
       this.setState({globalNumber})
     })
@@ -29,6 +32,27 @@ class App extends Component {
 
   onDecrement = () => this.state.socket.emit('decrement')
 
+
+  handleMessage=(e)=> {
+  e.preventDefault();
+  const message = e.target.txt.value;
+    this.setState(() => ({ message }));
+    console.log("message: " + this.state.message);
+    
+}
+
+// onChange = (e) => {
+//   const message = e.target.value
+//   this.setState({message})
+// }
+// onKeyDown = (e) => {
+//    if(e.keyCode === 13){ // enter
+//       const message = this.state.value
+//       // do what you want with input value
+//    }
+// }
+
+
   render(){
     return (
       <div className="App">
@@ -42,6 +66,13 @@ class App extends Component {
           <button onClick={this.onDecrement}>-</button>
         </p>
         <h2>{this.state.username} is connected</h2>
+        <div>
+        <form onSubmit={this.handleMessage}>
+        <input type="text" name="txt" placeholder="write something" /* onChange={this.onChange} onKeyDown={this.onKeyDown} value={this.state.value}*//>
+        <button   type="submit" name="submit">Send</button>
+        </form>
+        <h3>message: {this.state.message}</h3>
+        </div>
       </div>
     );
   }
