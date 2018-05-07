@@ -14,11 +14,15 @@ server.listen(8888, ()=> console.log(`server is ready`))
 let globalNumber = 0
 
 const io = require('socket.io')(server);
+const catNames = require('cat-names');
 
 io.on('connection', (socket) => {
 
+  const username = catNames.random()
   console.log('a user connected')
-	
+  io.emit('user:new',username)
+  socket.emit('user:me',username) 
+  
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
